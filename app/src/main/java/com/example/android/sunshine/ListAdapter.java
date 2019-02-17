@@ -46,7 +46,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     }
 
     // Création du ViewHolder pour l'adaptateur
-    public class ListViewHolder extends RecyclerView.ViewHolder {
+    public class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final TextView mItemView;
         final ListAdapter mAdapter;
 
@@ -54,6 +54,21 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
             super(itemView);
             mItemView = itemView.findViewById(R.id.tv_weather_data);
             this.mAdapter = adapter;
+            // Connection du onClickListener avec la View
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            // Obtenir la position de l'élément sur lequel on a cliqué
+            int mPosition = getLayoutPosition();
+            // l'Utiliser pour accéder à l'élément affecté dans mList.
+            String element = mList.get(mPosition);
+            // Changer le mot dans la liste mList.
+            mList.set(mPosition, "Clicked! " + element);
+            // Informez l'adaptateur que les données ont été modifiées afin qu'il puisse
+            // mettre à jour le RecyclerView pour afficher les données.
+            mAdapter.notifyDataSetChanged();
         }
     }
 }
