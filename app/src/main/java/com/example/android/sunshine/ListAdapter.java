@@ -19,9 +19,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     private LayoutInflater mInflater;
 
     // constructeur : Le constructeur doit avoir un paramètre de contexte et une liste de mots liée avec les données de l'application. La méthode doit instancier un LayoutInflatorpour mInflater et définir mList (les données passées)
-    public ListAdapter(Context context, LinkedList<String> mList) {
+    public ListAdapter(Context context, LinkedList<String> mMList) {
         mInflater = LayoutInflater.from(context);
-        this.mList = mList;
+        this.mList = mMList;
     }
 
     //  gonfle la présentation de l'article et renvoie a ViewHolder avec la présentation et l'adaptateur.

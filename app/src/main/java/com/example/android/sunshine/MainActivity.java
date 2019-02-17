@@ -3,21 +3,40 @@ package com.example.android.sunshine;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.LinkedList;
+
 public class MainActivity extends AppCompatActivity {
 
     // Create a field to store the weather display TextView
     private TextView mWeatherTextView;
+    private final LinkedList<String> mList = new LinkedList<>();
+    private RecyclerView mRecyclerView;
+    private ListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        // Get a handle to the RecyclerView.
+        mRecyclerView = findViewById(R.id.recyclerview);
+        // Create an adapter and supply the data to be displayed.
+        mAdapter = new ListAdapter(this, mList);
+        // Connect the adapter with the RecyclerView.
+        mRecyclerView.setAdapter(mAdapter);
+        // Give the RecyclerView a default layout manager.
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
 
         // Use findViewById to get a reference to the weather display TextView
         /*
@@ -56,9 +75,10 @@ public class MainActivity extends AppCompatActivity {
          * TextView.
          */
         for (String dummyWeatherDay : dummyWeatherData) {
-            mWeatherTextView.append(dummyWeatherDay + "\n\n\n");
+            mList.add(dummyWeatherDay + "\n\n\n");
         }
     }
+
 
     //  Override onCreateOptionsMenu to inflate the menu for this Activity
     @Override
