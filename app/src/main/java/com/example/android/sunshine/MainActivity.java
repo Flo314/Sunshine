@@ -1,12 +1,17 @@
 package com.example.android.sunshine;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    // COMPLETED (1) Create a field to store the weather display TextView
+    // Create a field to store the weather display TextView
     private TextView mWeatherTextView;
 
     @Override
@@ -14,18 +19,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // COMPLETED (2) Use findViewById to get a reference to the weather display TextView
+        // Use findViewById to get a reference to the weather display TextView
         /*
          * Using findViewById, we get a reference to our TextView from xml. This allows us to
          * do things like set the text of the TextView.
          */
         mWeatherTextView = (TextView) findViewById(R.id.tv_weather_data);
 
-        // COMPLETED (3) Create an array of Strings that contain fake weather data
+        // Create an array of Strings that contain fake weather data
         /*
-         * This String array contains dummy weather data. Later in the course, we're going to get
-         * real weather data. For now, we want to get something on the screen as quickly as
-         * possible, so we'll display this dummy data.
+         * This String array contains dummy weather data.
+         *
+         *
          */
         String[] dummyWeatherData = {
                 "Today, May 17 - Clear - 17°C / 15°C",
@@ -44,14 +49,38 @@ public class MainActivity extends AppCompatActivity {
                 "Mon, May 30 - Post Apocalypse - 15°C / 10°C",
         };
 
-        // COMPLETED (4) Append each String from the fake weather data array to the TextView
+        // Append each String from the fake weather data array to the TextView
         /*
-         * Iterate through the array and append the Strings to the TextView. The reason why we add
+         * Iterate through the array and append the Strings to the TextView.
          * the "\n\n\n" after the String is to give visual separation between each String in the
-         * TextView. Later, we'll learn about a better way to display lists of data.
+         * TextView.
          */
         for (String dummyWeatherDay : dummyWeatherData) {
             mWeatherTextView.append(dummyWeatherDay + "\n\n\n");
         }
+    }
+
+    //  Override onCreateOptionsMenu to inflate the menu for this Activity
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        /* Use AppCompatActivity's method getMenuInflater to get a handle on the menu inflater */
+        MenuInflater inflater = getMenuInflater();
+        /* Use the inflater's inflate method to inflate our menu layout to this menu */
+        inflater.inflate(R.menu.main, menu);
+        /* Return true so that the menu is displayed in the Toolbar */
+        return true;
+    }
+
+    // Override onOptionsItemSelected to handle clicks on the refresh button
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+        if(id == R.id.action_refresh){
+            Context context = MainActivity.this;
+            String textToShow = "Refresh clicked";
+            Toast.makeText(context,textToShow, Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
